@@ -11,8 +11,6 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
-#########################################  Crome Drivers {Setup}  ##########################################
-#Download Crome Web Drivers {https://chromedriver.storage.googleapis.com/index.html?path=2.33/}
 
 #-------------------------------- INITIALIZING VARIABLE FOR DRIVERS TO WORK --------------------------------- 
 #Set the PATH of Crome Driver 
@@ -102,7 +100,8 @@ with open('test.csv','r') as csvfile:
         searchButtonElement = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(searchButtonXpath))
         #Click on the search Button
         searchButtonElement.click()
-        #Printing searched element
+        
+        #Printing the current searched element on console
         print("Search success -> " + KT_search_string)
 
         sleep(5)
