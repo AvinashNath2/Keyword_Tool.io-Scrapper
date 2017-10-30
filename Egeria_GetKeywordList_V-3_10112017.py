@@ -14,27 +14,40 @@ from selenium.webdriver.common.action_chains import ActionChains
 #########################################  Crome Drivers {Setup}  ##########################################
 #Download Crome Web Drivers {https://chromedriver.storage.googleapis.com/index.html?path=2.33/}
 
+#-------------------------------- INITIALIZING VARIABLE FOR DRIVERS TO WORK --------------------------------- 
 #Set the PATH of Crome Driver 
-chromedriver = "C:/Sele_Drivers/chromedriver"
+chromedriver = "ENTER THE LOACTION OF YOUR CROME DRIVER"
+
+#Variable to store Password and ID
+KT_user_name = "USER_NAME"
+KT_user_pass = "PASSWORD"
+#-------------------------------------------------------------------------------------------------------------#
+
 os.environ["webdriver.chrome.driver"] = chromedriver
 driver = webdriver.Chrome(chromedriver)
 
+#----------------------------------------- LOADING LOGIN PAGE IN THE BROWSER  --------------------------------------------#
 #Loading Site {Log In page}
 driver.get("https://keywordtool.io/user?destination=node")
-#Variable to store Password and ID
-KT_user_name = "pramod@scalelabs.in"
-KT_user_pass = "scalelabs2016"
+#-------------------------------------------------------------------------------------------------------------------------#
+
+
+#----------------------------------------- XPATH AND ID's TO NAVIGATE IN THE BROWSER  ------------------------------------#
 #ID's of both email and password TextBox
 emailFieldID = "edit-name"
 passFieldID  = "edit-pass"
+#ID of SearchBox
+searchBoxID = "edit-keyword" 
+
 #Xpath for Login Button 
 loginButtonXpath = "//button[@value='Log in']"
 #Xpath for Search Button 
 searchButtonXpath = "//button[@type='submit']"
 #Xpath for Downloading CSV 
 downloadingButtonXpath = "(//*[contains(text(),'CSV')])[0]"
-#ID of SearchBox
-searchBoxID = "edit-keyword" 
+#--------------------------------------------------------------------------------------------------------------------------#
+
+#-------------------------------------------------LOGIN PROCESS------------------------------------------------------------#
 #searching the variable
 KT_search_string  = ""
 
@@ -58,6 +71,9 @@ passfieldElement.send_keys(KT_user_pass)
 
 #Clicking the Login Button
 loginButtonElement.click()
+#--------------------------------------------------------------------------------------------------------------------------#
+
+#-------------------------------------------------SEARCHING PROCESS--------------------------------------------------------#
 #Search Button 
 searchButtonElement = WebDriverWait(driver,10).until(lambda driver: driver.find_element_by_xpath(searchButtonXpath))
 #Input Text in Search TextView
@@ -90,7 +106,7 @@ with open('test.csv','r') as csvfile:
         print("Search success -> " + KT_search_string)
 
         sleep(5)
-        
+        #-----------------------------------------------FILE DOWNLOADING PROCESS--------------------------------------------------#
         #To get the CSV Downloading From Drop down menu on the Left
         actions = ActionChains(driver) 
         actions.send_keys(Keys.TAB * 13)
@@ -98,12 +114,18 @@ with open('test.csv','r') as csvfile:
         actions.send_keys(Keys.TAB)
         actions.send_keys(Keys.RETURN)
         actions.perform()   
+        #-------------------------------------------------------------------------------------------------------------------------#
+        
         #Sleep in order to get the load full page
         sleep(7)
-        #Switching from Downloading window to Main Window
+        
+        #Switching from Downloading pop-up window to Main Window
         driver.switch_to_window(main_window)
-        #Loading Home location for next search
+        
+        #Loading Home location for next search from CSV file
         driver.get("https://keywordtool.io")
 
+#-----------------------------------------------CLOSING WEB DRIVERS ---------------------------------------------------------#       
 #Close Web Driver{Crome}
 driver.quit()
+#----------------------------------------------------------------------------------------------------------------------------#
